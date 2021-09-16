@@ -1,7 +1,4 @@
-/**
- * @type {Array}
- */
-let { data } = require("./data.js");
+const { data } = require("./data.js");
 console.log(data);
 
 // Get only real arguments and not script name
@@ -9,11 +6,19 @@ const args = process.argv.slice(2);
 
 if (args[0].startsWith("--filter")) {
     // Filter
-
     let filter = args[0].split("=")[1];
 
+    filterAnimals(data, filter);
+} else if (args[0].startsWith("--count")) {
+    // Count
+
+    countAnimalsAndPeople(data);
+}
+
+
+function filterAnimals(data, filter) {
     // Filter the array to include only the filter given
-    data = data.reduce((filteredCountries, country) => {
+    let filteredData = data.reduce((filteredCountries, country) => {
 
         // Reduce the peoples array of animals to include the filter
         country.people = country.people.reduce((filteredPeople, people) => {
@@ -35,19 +40,24 @@ if (args[0].startsWith("--filter")) {
         }
         return filteredCountries;
     }, []);
-} else if (args[0].startsWith("--count")) {
-    // Count
 
+    return filteredData;
+}
+
+function countAnimalsAndPeople(data) {
     // Remap the array to add the count of each people/animals
-    data = data.map((country) => ({
+    let countedData = data.map((country) => ({
         name: `${country.name} [${country.people.length}]`,
         people: country.people.map((people) => ({
             name: `${people.name} [${people.animals.length}]`,
             animals: people.animals,
         })),
     }));
+
+    return countedData;
 }
 
-console.log(data);
-
-return data;
+module.exports = {
+    filterAnimals,
+    countAnimalsAndPeople,
+};
