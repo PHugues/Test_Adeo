@@ -1,19 +1,22 @@
 const { data } = require("./data.js");
-console.log(data);
+const util = require("util");
 
 // Get only real arguments and not script name
 const args = process.argv.slice(2);
 
-if (args[0].startsWith("--filter")) {
+let result;
+if (args[0] && args[0].startsWith("--filter")) {
     // Filter
     let filter = args[0].split("=")[1];
 
-    filterAnimals(data, filter);
-} else if (args[0].startsWith("--count")) {
+    result = filterAnimals(data, filter);
+} else if (args[0] && args[0].startsWith("--count")) {
     // Count
 
-    countAnimalsAndPeople(data);
+    result = countAnimalsAndPeople(data);
 }
+
+console.log(util.inspect(result, false, null, true));
 
 
 function filterAnimals(data, filter) {
@@ -21,22 +24,28 @@ function filterAnimals(data, filter) {
     let filteredData = data.reduce((filteredCountries, country) => {
 
         // Reduce the peoples array of animals to include the filter
-        country.people = country.people.reduce((filteredPeople, people) => {
-            people.animals = people.animals.filter((animal) =>
+        let newCountry = {
+            name: country.name,
+        };
+        newCountry.people = country.people.reduce((filteredPeople, people) => {
+            let filteredAnimals = people.animals.filter((animal) =>
                 animal.name.includes(filter)
             );
 
             // Check number of animals after applying the filter, if at least one, we keep it
-            if (people.animals.length > 0) {
-                filteredPeople.push(people);
+            if (filteredAnimals.length > 0) {
+                filteredPeople.push({
+                    name: people.name,
+                    animals: filteredAnimals,
+                });
             }
 
             return filteredPeople;
         }, []);
 
         // Check number of people, if at least one matches the filter, we keep it
-        if (country.people.length > 0) {
-            filteredCountries.push(country);
+        if (newCountry.people.length > 0) {
+            filteredCountries.push(newCountry);
         }
         return filteredCountries;
     }, []);
