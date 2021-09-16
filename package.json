@@ -1,0 +1,21 @@
+{
+  "name": "test_adeo",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PHugues/Test_Adeo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PHugues/Test_Adeo/issues"
+  },
+  "homepage": "https://github.com/PHugues/Test_Adeo#readme",
+  "devDependencies": {
+    "jest": "^27.2.0"
+  }
+}
