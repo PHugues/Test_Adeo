@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+    "start": "npm .",
     "test": "jest .",
     "coverage": "jest . --coverage"
   },
@@ -10,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/PHugues/Test_Adeo.git"
   },
-  "author": "",
+  "author": "Pierre HUGUES",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PHugues/Test_Adeo/issues"
